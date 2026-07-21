@@ -370,9 +370,13 @@ async function prepareRun() {
     await webR.destroy(result);
   }
 
-  const mappingByStem = new Map();
+  const mappingsByStem = new Map();
+
   for (const row of manifest) {
-    mappingByStem.set(String(row.source_stem).toLowerCase(), row);
+    const stem = String(row.source_stem).toLowerCase();
+    const existing = mappingsByStem.get(stem) || [];
+    existing.push(row);
+    mappingsByStem.set(stem, existing);
   }
 
   const sourceStemSet = new Set(sourceImages.map((item) => fileStem(item.name)));
@@ -387,7 +391,8 @@ async function prepareRun() {
 
   const usedTargetNames = new Set();
   const copyPlan = sourceImages.map((source) => {
-    const match = mappingByStem.get(fileStem(source.name));
+    const matches = mappingsByStem.get(fileStem(source.name));
+    const match = matches ? matches[0] : null;
     const extension = fileExtension(source.name);
     const candidate = match
       ? `${String(match.target_base).replaceAll(":", "-")}.${extension}`

@@ -140,39 +140,6 @@ build_manifest <- function(tracking_path, sav_path, cohort) {
 
   manifest <- unique(manifest)
 
-  targets_by_source <- split(manifest$target_base, manifest$source_stem)
-  conflicting_sources <- names(Filter(function(x) length(unique(x)) > 1, targets_by_source))
-  if (length(conflicting_sources) > 0) {
-    
-    conflict_details <- manifest[
-      manifest$source_stem %in% conflicting_sources,
-      c("source_stem", "expected_filename", "target_base")
-    ]
-    
-    detail_lines <- apply(
-      conflict_details,
-      1,
-      function(x) paste0(
-        x[["source_stem"]],
-        "  →  ",
-        x[["target_base"]]
-      )
-    )
-    
-    stop(
-      paste(
-        c(
-          "The following source images map to multiple output filenames:",
-          detail_lines,
-          "No files were copied."
-        ),
-        collapse = "\n"
-      ),
-      call. = FALSE
-    )
-  }
-
-  manifest <- manifest[!duplicated(manifest$source_stem), , drop = FALSE]
   rownames(manifest) <- NULL
   manifest
 }
