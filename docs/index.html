@@ -1,28 +1,84 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shiny App</title>
-    <script
-      src="./shinylive/load-shinylive-sw.js"
-      type="module"
-    ></script>
-    <script type="module">
-      import { runExportedApp } from "./shinylive/shinylive.js";
-      runExportedApp({
-        id: "root",
-        appEngine: "r",
-        relPath: "",
-      });
-    </script>
-    <link rel="stylesheet" href="./shinylive/style-resets.css" />
-    <link rel="stylesheet" href="./shinylive/shinylive.css" />
-    
-  </head>
-  <body>
-    
-    <div style="height: 100vh; width: 100vw" id="root"></div>
-    
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Convert Height and Weight Images to PIDs</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Tots &amp; Tech data checks</p>
+        <h1>Convert Height and Weight Images to PIDs</h1>
+        <p class="lede">
+          Select the local OneDrive-synced project folder. The app reads the tracking
+          workbook and Height &amp; Weight survey file, then creates renamed copies for review.
+        </p>
+      </div>
+      <div id="statusBadge" class="status-badge status-loading">Loading R…</div>
+    </header>
+
+    <section class="card instructions">
+      <h2>Before running</h2>
+      <ol>
+        <li>Download and extract the Height &amp; Weight images from Qualtrics.</li>
+        <li>Place the extracted folder under <code>Participant Tracking/Mid Assessment Data Checks/Height and Weight</code> and rename it <code>Images</code>.</li>
+        <li>Place one survey file beginning with <code>Height+and+Weight</code> and ending in <code>.sav</code> in that same Height and Weight folder.</li>
+        <li>Make sure OneDrive has downloaded the required files to this computer.</li>
+      </ol>
+    </section>
+
+    <section class="card controls-card">
+      <div class="control-grid">
+        <label>
+          <span>Cohort</span>
+          <select id="cohort"></select>
+        </label>
+
+        <label>
+          <span>Assessment</span>
+          <select id="assessment">
+            <option>A1</option>
+            <option>A6</option>
+            <option>A12</option>
+            <option>A24</option>
+            <option>A36</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="folder-row">
+        <button id="selectFolder" class="button button-secondary" type="button">
+          Select project folder
+        </button>
+        <div>
+          <div id="folderName" class="folder-name">No folder selected</div>
+          <div class="hint">Select the main <strong>R01 - Tots &amp; Tech 2.0</strong> folder.</div>
+        </div>
+      </div>
+
+      <div class="safety-note">
+        <strong>Overwrite protection:</strong> source data are never edited. The app stops if the selected
+        cohort/assessment output folder contains any file or subfolder. An existing empty output folder is allowed.
+      </div>
+
+      <button id="runButton" class="button button-primary" type="button" disabled>
+        Validate and run
+      </button>
+    </section>
+
+    <section class="card log-card">
+      <div class="log-heading">
+        <h2>Run log</h2>
+        <button id="clearLog" class="text-button" type="button">Clear</button>
+      </div>
+      <pre id="log" aria-live="polite">Starting webR…</pre>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
 </html>
