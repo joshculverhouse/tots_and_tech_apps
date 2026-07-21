@@ -144,6 +144,14 @@ build_manifest <- function(tracking_path, sav_path, cohort) {
   conflicting_sources <- names(Filter(function(x) length(unique(x)) > 1, targets_by_source))
   if (length(conflicting_sources) > 0) {
     preview <- paste(utils::head(conflicting_sources, 5), collapse = ", ")
+    
+    conflict_details <- manifest[
+      manifest$source_stem %in% conflicting_sources,
+      c("source_stem", "expected_filename", "target_base")
+    ]
+    
+    print(conflict_details)
+    
     stop(
       "The survey data map one or more source images to multiple participant filenames. ",
       "No files were copied. Conflicting image stem(s): ", preview,
