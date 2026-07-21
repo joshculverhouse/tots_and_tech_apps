@@ -29,7 +29,7 @@ const elements = {
   statusBadge: document.querySelector("#statusBadge"),
 };
 
-for (const letter of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
+for (const letter of "ABCDEFGHIJ") {
   const option = document.createElement("option");
   option.value = letter;
   option.textContent = letter;
