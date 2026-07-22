@@ -12,10 +12,10 @@
     <header class="hero">
       <div>
         <p class="eyebrow">Tots &amp; Tech data checks</p>
-        <h1>Convert Height and Weight Images to PIDs</h1>
+        <h1>Relabel H&W Images to PID and Date</h1>
         <p class="lede">
           Select the local OneDrive-synced project folder. The app reads the tracking
-          workbook and Height &amp; Weight survey file, then creates renamed copies for review.
+          sheet and Height &amp; Weight survey, then creates renamed copies for review.
         </p>
       </div>
       <div id="statusBadge" class="status-badge status-loading">Loading R…</div>
@@ -26,8 +26,7 @@
       <ol>
         <li>Download and extract the Height &amp; Weight images from Qualtrics.</li>
         <li>Place the extracted folder under <code>Participant Tracking/Mid Assessment Data Checks/Height and Weight</code> and rename it <code>Images</code>.</li>
-        <li>Place one survey file beginning with <code>Height+and+Weight</code> and ending in <code>.sav</code> in that same Height and Weight folder.</li>
-        <li>Make sure OneDrive has downloaded the required files to this computer.</li>
+        <li>Download the survey file beginning with <code>Height+and+Weight</code> and ending in <code>.sav</code> and place in the same Height and Weight folder.</li>
       </ol>
     </section>
 
@@ -62,7 +61,7 @@
 
       <div class="safety-note">
         <strong>Overwrite protection:</strong> source data are never edited. The app stops if the selected
-        cohort/assessment output folder contains any file or subfolder. An existing empty output folder is allowed.
+        cohort/assessment output folder contains any file or subfolder.
       </div>
 
       <button id="runButton" class="button button-primary" type="button" disabled>
